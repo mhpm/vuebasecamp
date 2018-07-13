@@ -1,5 +1,20 @@
 <template>
   <div class="index container section"><br>
+    <div class="row" v-if="loading">
+      <div class="col s12 center-align">
+        <div class="preloader-wrapper small active">
+          <div class="spinner-layer">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div><div class="gap-patch">
+              <div class="circle"></div>
+            </div><div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div><br><span class="grey-text">cargando recetas</span>
+      </div>
+    </div>
     <div class="row">
       <div class="col s12 m6 l4"  v-for="smoothie in smoothies" :key="smoothie.id">
         <div class="card">
@@ -41,6 +56,7 @@ export default {
   },
   data(){
     return{
+      loading:false,
       smoothies:[],
       db: firebase.firestore()
     }
@@ -56,7 +72,7 @@ export default {
     EditSmoothie(){}
   },
   created(){
-    
+    this.loading = true
     this.db.collection('smoothies').onSnapshot((querySnapshot) => {
       this.smoothies = [];
         querySnapshot.forEach((doc) => {
@@ -64,9 +80,10 @@ export default {
               smoothie.id = doc.id
               this.smoothies.push(smoothie)
         });
-        console.log('ready data');
+        this.loading = false
       },function(error) {
           alert('no es posible conectarce a internet');
+          this.loading = false
     });
     $(document).ready(function () {
         $('.materialboxed').materialbox();

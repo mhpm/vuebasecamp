@@ -21,11 +21,11 @@
                     <image-uploader style="padding: 30px"
                         :debug="1"
                         :maxWidth="640"
-                        :quality="0.7"
+                        :quality="0.9"
                         outputFormat="blob"
                         :preview=true
-                        class="center-align card"
-                        capture="environment"
+                        class="center-align card uploader"
+                        capture="user"
                         @input="setImage"
                         @onComplete="endImageResize"
                     >
@@ -215,5 +215,4 @@ import { ImageUploader } from 'vue-image-upload-resize'
   max-height: 80% !important;
   bottom: 0px;
 }
-
 </style>
