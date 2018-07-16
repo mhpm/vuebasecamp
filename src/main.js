@@ -4,6 +4,11 @@ import router from './router'
 import store from './store'
 import './registerServiceWorker'
 
+import es from 'vee-validate/dist/locale/es';
+import VeeValidate, { Validator } from 'vee-validate';
+Validator.localize('es', es);
+Vue.use(VeeValidate);
+
 Vue.config.productionTip = false
 
 new Vue({

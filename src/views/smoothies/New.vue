@@ -1,88 +1,90 @@
 <template>
-    <div>
+    <div class="container"><br><br>
         <!-- Modal Structure -->
-        <div id="modal1" class="modal">
-            <h5 class="center-align pink z-depth-1 white-text" style="padding: 20px; margin:0px;">Nueva Receta</h5>
-            <form @submit.prevent="validateBeforeSubmit">
-                <div class="modal-content">
-                    <!-- <img src="" class="responsive-img" alt="image"> -->
-                    <!-- {{progress}} <button class="btn" @click="progress = progress + 10"></button> -->
-                    <!-- <div class="file-field input-field">
-                        <div class="btn btn-flat lime">
-                            <span>Buscar</span>
-                        </div>
-                        <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text" placeholder="cargar imagen ( pocional )">
-                            <input type="file" @change="onFileChanged">
-                        </div>
-                    </div> -->
-                    <div class="center-align">
-                        Seleccione una imagen ( opcional )
-                    </div> 
-                    <image-uploader style="padding: 30px"
-                        :debug="1"
-                        :maxWidth="640"
-                        :quality="0.9"
-                        outputFormat="blob"
-                        :preview=true
-                        class="center-align card uploader"
-                        capture="user"
-                        @input="setImage"
-                        @onComplete="endImageResize"
-                    >
-                    </image-uploader>
-                    <br>
-                    <div class="field title">
-                        <label class="" for="title">Nombre:</label>
-                        <input type="text" name="Nombre" id="" v-model="smoothie.title" v-validate="'required'" />
-                        <span class="helper-text red-text">{{errors.first('Nombre')}}</span>
-                    </div>
-                    <div class="field ingredients">
-                        <label for="ingredients">Ingredientes: </label>
-                        <div class="row">
-                            <div class="col s9 m5">
-                                <input type="text" name="ingredients" v-model="ingredient" />
-                                <span class="helper-text red-text">{{feedback}}</span>
+        <div class="row section">
+            <div class="col s12">
+                <h5 class="center-align pink white-text" style="padding: 20px; margin:0px;">
+                    <span style="cursor: pointer;" class="left material-icons" @click="$router.push({name:'Smoothies'})">
+                        arrow_back
+                    </span>
+                    <span  style="margin-left:-30px;">Nueva Receta</span>
+                </h5>
+                <form @submit.prevent="validateBeforeSubmit">
+                        <!-- <img src="" class="responsive-img" alt="image"> -->
+                        <!-- {{progress}} <button class="btn" @click="progress = progress + 10"></button> -->
+                        <!-- <div class="file-field input-field">
+                            <div class="btn btn-flat lime">
+                                <span>Buscar</span>
                             </div>
-                            <div class="col s3 m7">
-                                <button class="btn-small waves-light lime btn-flat" @click.prevent="AddIngredient" @keydown.enter.prevent="AddIngredient">
-                                    <i class="material-icons">add</i>
-                                </button>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text" placeholder="cargar imagen ( pocional )">
+                                <input type="file" @change="onFileChanged">
+                            </div>
+                        </div> --> <br/>
+                        <div class="center-align">
+                            Seleccione una imagen ( opcional )
+                        </div> 
+                        <image-uploader style="padding: 30px"
+                            :debug="1"
+                            :maxWidth="640"
+                            :quality="0.9"
+                            outputFormat="blob"
+                            :preview=true
+                            class="center-align uploader"
+                            capture="user"
+                            @input="setImage"
+                            @onComplete="endImageResize"
+                        >
+                        </image-uploader>
+                        <br>
+                        <div class="field title">
+                            <label class="" for="title">Nombre:</label>
+                            <input type="text" name="Nombre" id="" v-model="smoothie.title" v-validate="'required'" />
+                            <span class="helper-text red-text">{{errors.first('Nombre')}}</span>
+                        </div>
+                        <div class="field ingredients">
+                            <label for="ingredients">Ingredientes: </label>
+                            <div class="row">
+                                <div class="col s9 m5">
+                                    <input type="text" name="ingredients" v-model="ingredient" />
+                                    <span class="helper-text red-text">{{feedback}}</span>
+                                </div>
+                                <div class="col s3 m7">
+                                    <button class="btn-small waves-light lime btn-flat" @click.prevent="AddIngredient" @keydown.enter.prevent="AddIngredient">
+                                        <i class="material-icons">add</i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12">
+                                    <span class="chip" v-for="(ing, index) in smoothie.ingredients" :key="index">
+                                        {{ing}}
+                                        <i class="material-icons tiny" @click="RemoveIngredient(ing)">close</i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <textarea id="textarea1" class="materialize-textarea" v-model="smoothie.preparation"></textarea>
+                                    <label for="textarea1">Preparación</label>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col s12">
-                                <span class="chip" v-for="(ing, index) in smoothie.ingredients" :key="index">
-                                    {{ing}}
-                                    <i class="material-icons tiny" @click="RemoveIngredient(ing)">close</i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <textarea id="textarea1" class="materialize-textarea" v-model="smoothie.preparation"></textarea>
-                                <label for="textarea1">Preparación</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="row">
-                        <div class="col s12">
-                            <div class="field center-align" v-if="loading">
-                                {{msg}} {{progress}}% <br>
-                                <div class="progress">
-                                    <div class="determinate" v-bind:style="{width: progress + '%'}"></div>
+                                <div class="field center-align" v-if="loading">
+                                    {{msg}} {{progress}}% <br>
+                                    <div class="progress">
+                                        <div class="determinate" v-bind:style="{width: progress + '%'}"></div>
+                                    </div>
+                                </div>
+                                <div class="field center-align">
+                                    <button href="#!" class=" white-text waves-effect waves-green btn pink" @click="validateBeforeSubmit" :disabled="loading" >Guardar</button>
                                 </div>
                             </div>
-                            <div class="field center-align">
-                                <button href="#!" class=" white-text waves-effect waves-green btn pink" @click="validateBeforeSubmit" :disabled="loading" >Guardar</button>
-                            </div>
                         </div>
-                    </div>
-                </div>
-            </form>
-            <br />
+                </form>
+            </div>
         </div>
     </div>
 </template>
@@ -205,6 +207,7 @@ import { ImageUploader } from 'vue-image-upload-resize'
                             vm.msg = null;
                             vm.loading = false;
                             vm.progress = null;
+                            vm.$router.push({name:'Smoothies'})
                         }, 2000);
                     });
             },
@@ -224,6 +227,4 @@ import { ImageUploader } from 'vue-image-upload-resize'
 </script>
 
 <style lang='scss' scoped>
-.modal{
-}
 </style>

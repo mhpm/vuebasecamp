@@ -22,8 +22,12 @@
             <!-- <img class="responsive-img" :src="require(`../assets/${smoothie.img}`)" /> -->
             <img :src="smoothie.imgUrl" alt=""/>
             <span class="card-title">{{ smoothie.title }}</span>
-            <a style="margin-right: 60px" class="btn-floating halfway-fab waves-effect waves-light yellow darken-3 modal-trigger" href="#modal1" @click="EditSmoothie(smoothie.id)"><i class="material-icons">edit</i></a>
-            <a class="btn-floating halfway-fab waves-effect waves-light red"  @click="DeleteSmoothie(smoothie.id)"><i class="material-icons">delete</i></a>
+            <router-link :to="{name:'SmoothieEdit', params:{ id: smoothie.id }}" >
+              <a style="margin-right: 60px" class="btn-floating halfway-fab yellow darken-3">
+                  <i class="material-icons">edit</i>
+              </a>
+            </router-link>
+            <a class="btn-floating halfway-fab red"  @click="DeleteSmoothie(smoothie.id)"><i class="material-icons">delete</i></a>
           </div>
           <div class="card-content">
             <h6>Ingredientes</h6>
@@ -40,20 +44,14 @@
         </div>
       </div>
     </div>
-    <SmoothieForm />
   </div>
 </template>
 
 <script>
 import firebase from '@/firebase/init'
-import SmoothieForm from '@/components/SmoothieForm'
-import { ImageUploader } from 'vue-image-upload-resize'
 
 export default {
-  name: 'Index',
-  components:{
-    SmoothieForm, ImageUploader
-  },
+  name: 'Smoothie',
   data(){
     return{
       loading:false,

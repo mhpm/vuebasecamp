@@ -1,9 +1,9 @@
 <template>
       <nav>
         <div class="nav-wrapper lime">
-            <a href="#" style="margin-left: 50px" class="brand-logo title">Recetas</a>
+            <a href="#" style="margin-left: 50px;" class="brand-logo title">Recetas</a>
             <a class="btn-floating btn-large halfway-fab pink modal-trigger" href="#modal1">
-                <router-link to="">
+                <router-link to="SmoothieNew">
                     <i class="material-icons">add</i>
                 </router-link>
             </a>
